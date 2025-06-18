@@ -21,3 +21,11 @@
   text-align: center;
   margin-top: 2rem;
 }
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}

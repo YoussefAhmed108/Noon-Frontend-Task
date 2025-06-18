@@ -6,17 +6,21 @@ import Error from "./error";
 import Spinner from "@/components/Spinner";
 import MovieCard from "@/components/MovieCard";
 import { Movie } from "@/types/movie";
-import styles from './page.module.css';
+import styles from "./page.module.css";
+import { useParams } from "next/navigation";
 
 const Search = () => {
+  const {term} = useParams();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+  const [page, setPage] = useState(1);
   const {
     data: movies,
     isLoading,
     error,
   } = useFetch(
-    "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc",
+    `https://api.themoviedb.org/3/search/movie?language=en-US& query=${term}& page=${page}& include_adult=false`,
     {
       headers: {
         Authorization: `Bearer ${API_KEY}`,
@@ -24,8 +28,6 @@ const Search = () => {
       },
     }
   );
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
-  const [page, setPage] = useState(1);
   const itemsPerPage = 10;
   const startIdx = (page - 1) * itemsPerPage;
   const endIdx = startIdx + itemsPerPage;
@@ -38,16 +40,22 @@ const Search = () => {
     const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
     setPage(1);
   }, [filteredMovies]);
-  
+
   useEffect(() => {
     setFilteredMovies(movies || []);
   }, [movies]);
-  
+
   const searchMovies = (searchTerm: string) => {
-    setFilteredMovies(movies ? movies.filter((movie) =>
-      movie.original_title.toLowerCase().includes(searchTerm.toLowerCase())
-    ) : []);
-  }
+    setFilteredMovies(
+      movies
+        ? movies.filter((movie) =>
+            movie.original_title
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase())
+          )
+        : []
+    );
+  };
   if (error) return <Error />;
   if (isLoading) return <Spinner />;
   console.log(filteredMovies);
@@ -66,13 +74,22 @@ const Search = () => {
             <MovieCard movie={movie} key={movie.id} />
           ))
         ) : (
-          <span className={styles.noMovies}>No Movies found for this search term</span>
+          <span className={styles.noMovies}>
+            No Movies found for this search term
+          </span>
         )}
       </div>
-      <div>
-        <button disabled={page == 1} onClick={() => setPage(p => p - 1)}>Previous</button>
+      <div className={styles.pagination}>
+        <button disabled={page == 1} onClick={() => setPage((p) => p - 1)}>
+          Previous
+        </button>
         <p>Page {page}</p>
-        <button disabled={page == totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
+        <button
+          disabled={page == totalPages}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
