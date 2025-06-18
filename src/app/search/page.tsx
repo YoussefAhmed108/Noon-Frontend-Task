@@ -71,6 +71,7 @@ const Search = () => {
       </div>
       <div>
         <button disabled={page == 1} onClick={() => setPage(p => p - 1)}>Previous</button>
+        <p>Page {page}</p>
         <button disabled={page == totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
       </div>
     </div>
