@@ -26,6 +26,8 @@ export function useFetch(
     axios(url, config)
       .then((response) => {
         if (isMounted) {
+          console.log("Fetched Page");
+          console.log(response.data);
           setData(response.data.results);
           setIsLoading(false);
         }

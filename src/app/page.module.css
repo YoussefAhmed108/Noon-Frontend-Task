@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto auto 0 0;
+
+}
+
+.title {
+  font-size: 52px;
+  font-weight: 700;
+}

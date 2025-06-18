@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 
 const Search = () => {
   const {term} = useParams();
+  console.log(term);
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
@@ -20,7 +21,7 @@ const Search = () => {
     isLoading,
     error,
   } = useFetch(
-    `https://api.themoviedb.org/3/search/movie?language=en-US& query=${term}& page=${page}& include_adult=false`,
+    `https://api.themoviedb.org/3/search/movie?language=en-US&query=${term}&page=${page}&include_adult=false&sort_by=popularity.desc`,
     {
       headers: {
         Authorization: `Bearer ${API_KEY}`,
@@ -33,29 +34,33 @@ const Search = () => {
   const endIdx = startIdx + itemsPerPage;
   const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
 
-  useEffect(() => {
-    const itemsPerPage = 10;
-    const startIdx = (page - 1) * itemsPerPage;
-    const endIdx = startIdx + itemsPerPage;
-    const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
-    setPage(1);
-  }, [filteredMovies]);
+  // useEffect(() => {
+  //   const itemsPerPage = 10;
+  //   const startIdx = (page - 1) * itemsPerPage;
+  //   const endIdx = startIdx + itemsPerPage;
+  //   const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
+  //   setPage(1);
+  // }, [filteredMovies]);
 
-  useEffect(() => {
-    setFilteredMovies(movies || []);
-  }, [movies]);
+  // useEffect(() => {
 
-  const searchMovies = (searchTerm: string) => {
-    setFilteredMovies(
-      movies
-        ? movies.filter((movie) =>
-            movie.original_title
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase())
-          )
-        : []
-    );
-  };
+  // }, [page]);
+
+  // useEffect(() => {
+  //   setFilteredMovies(movies || []);
+  // }, [movies]);
+
+  // const searchMovies = (searchTerm: string) => {
+  //   setFilteredMovies(
+  //     movies
+  //       ? movies.filter((movie) =>
+  //           movie.original_title
+  //             .toLowerCase()
+  //             .includes(searchTerm.toLowerCase())
+  //         )
+  //       : []
+  //   );
+  // };
   if (error) return <Error />;
   if (isLoading) return <Spinner />;
   console.log(filteredMovies);
@@ -66,11 +71,11 @@ const Search = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search By Movie title..."
         />
-        <button onClick={() => searchMovies(searchTerm)}>Search</button>
+        <button>Search</button>
       </span>
       <div className={styles.moviesGrid}>
-        {filteredMovies?.length != 0 ? (
-          filteredMovies?.map((movie) => (
+        {movies?.length != 0 ? (
+          movies?.map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))
         ) : (

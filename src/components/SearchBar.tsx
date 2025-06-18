@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SearchBar.module.css"; // Assuming you have a CSS module for styling
+import Link from "next/link";
 const SearchBar = () => {
+  const[searchTerm, setSearchTerm] = useState("");
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <div className={styles.searchContainer}>
       <input
         type="text"
         placeholder="Search Movie Title..."
         className={styles.searchbar}
+        onChange={handleSearchChange}
       />
       <button className={styles.searchButton}>
-        <SearchIcon />
+        <Link href={`/search/${searchTerm}`}>
+          <SearchIcon/>
+        </Link>
       </button>
     </div>
   );

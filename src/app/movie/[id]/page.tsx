@@ -130,7 +130,7 @@ const MoviePage = () => {
               <span className={styles.metaItem}>
                 &#x23F1; {movie?.runtime ? formatRuntime(movie.runtime) : ""}
               </span>
-              <span className={styles.metaItem}>★ {movie?.vote_average}</span>
+              <span className={styles.metaItem}>★ {movie?.vote_average.toPrecision(2)}</span>
             </div>
             <p className={styles.overview}>{movie?.overview}</p>
             <div className={styles.detailsTable}>
