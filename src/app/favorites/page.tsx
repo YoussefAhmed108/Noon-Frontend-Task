@@ -9,7 +9,7 @@ const FavouritesPage = () => {
   return (
     <div>
         {
-            movies.map(movie => <MovieCard movie={movie}/>)
+            movies.map(movie => <MovieCard key={movie.id} movie={movie}/>)
         }
     </div>
   )

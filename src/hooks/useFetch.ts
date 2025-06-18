@@ -22,12 +22,10 @@ export function useFetch(
     let isMounted = true;
     setIsLoading(true);
     setError(null);
+
     axios(url, config)
       .then((response) => {
         if (isMounted) {
-          console.log("Fetching New Data!");
-          console.log(url);
-          console.log(response.data);
           setData(response.data.results);
           setIsLoading(false);
         }

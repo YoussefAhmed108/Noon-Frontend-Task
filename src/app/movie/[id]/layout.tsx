@@ -1,10 +1,10 @@
 import React from 'react'
-import Search from './page'
+import MoviePage from './page'
 
 const layout = () => {
   return (
     <div>
-        <Search/>
+        <MoviePage/>
     </div>
   )
 }

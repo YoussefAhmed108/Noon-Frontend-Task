@@ -1,0 +1,434 @@
+.backdropContainer {
+  min-height: 100vh;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 0 4rem 0;
+}
+
+.centerCard {
+  display: flex;
+  flex-direction: column;
+  background: #181818;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  max-width: 1000px;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  gap: 2.5rem;
+  opacity: 0.90;
+}
+
+.posterCol {
+  flex: 0 0 260px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.posterImg {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+.noPoster {
+  width: 260px;
+  height: 390px;
+  background: #333;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+}
+
+.movieInfo {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.infoCol {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  color: #fff;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.favBtn {
+  background: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.favBtn:hover {
+  background: #b00610;
+}
+
+.rmvFavBtn {
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.genreTag {
+  background: #fff;
+  color: #181818;
+  border-radius: 1rem;
+  padding: 0.3rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.overview {
+  font-size: 1.05rem;
+  color: #ccc;
+  margin-bottom: 1.2rem;
+}
+
+.detailsTable {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.4rem 1.2rem;
+  font-size: 1rem;
+  color: #fff;
+}
+.detailsTable div {
+  display: contents;
+}
+.detailsTable span:first-child {
+  color: #aaa;
+  min-width: 120px;
+}
+
+.trailerSection {
+  width: 100%;
+  /* max-width: 900px; */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.trailerTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  margin-left: 0.2rem;
+}
+
+.trailer {
+  border-radius: 0.7rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  margin: auto auto;
+}
+
+.noTrailer {
+  color: #aaa;
+  font-size: 1rem;
+  margin-left: 0.2rem;
+}
+
+.castCrewWrapper {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 2.5rem auto 0 auto;
+  width: 100%;
+  max-width: 900px;
+}
+
+.castTableSection, .crewTableSection {
+  flex: 1 1 0;
+  background: rgba(24, 24, 24, 0.95);
+  border-radius: 1rem;
+  padding: 1.5rem 1.2rem;
+  box-shadow: none;
+  color: #fff;
+  min-width: 0;
+}
+
+.castCrewHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.castCrewTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e50914;
+  margin: 0;
+}
+
+.castTable, .crewTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.castRow, .crewRow {
+  background: transparent;
+  border-radius: 0.7rem;
+  border: 1.5px solid #232323;
+  box-shadow: none;
+}
+
+.castImgCell, .crewImgCell {
+  width: 44px;
+  padding: 0.2rem 0.5rem 0.2rem 0;
+}
+
+.castImg, .crewImg {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #333;
+  border: none;
+}
+
+.castImgPlaceholder, .crewImgPlaceholder {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #333;
+  display: inline-block;
+}
+
+.castNameCell {
+  font-weight: 600;
+  color: #fff;
+  padding-right: 0.5rem;
+}
+
+.castName {
+  color: #e50914;
+}
+
+.castRoleCell {
+  color: #aaa;
+  font-size: 0.98rem;
+}
+
+.crewJobCell {
+  font-weight: 600;
+  color: #e50914;
+  padding-right: 0.5rem;
+  min-width: 90px;
+}
+
+.crewNamesCell {
+  color: #fff;
+  font-size: 0.98rem;
+}
+
+.crewName {
+  color: #fff;
+}
+
+.castSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  gap: 1rem;
+  width: 50%;
+  margin-top: 2.5rem;
+  max-width: 900px;
+  background: rgba(24, 24, 24, 0.95);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.18);
+  color: #fff;
+}
+
+.castTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: #fff;
+}
+
+.castGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.castCard {
+  background: #222;
+  border-radius: 0.7rem;
+  padding: 0.8rem 1.2rem;
+  min-width: 120px;
+  max-width: 180px;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.98rem;
+  transition: background 0.2s;
+}
+.castCard:hover {
+  background: #333;
+}
+
+.castName {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: #e50914;
+}
+
+.castRole {
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+.crewSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  gap: 1rem;
+  width: 50%;
+  margin-top: 1.5rem;
+  max-width: 900px;
+  background: rgba(24, 24, 24, 0.95);
+  border-radius: 1rem;
+  padding: 1.2rem 2rem;
+  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.18);
+  color: #fff;
+}
+
+.crewTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.crewGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+
+.crewCard {
+  background: #232323;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.1rem;
+  min-width: 110px;
+  max-width: 160px;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.93rem;
+  transition: background 0.2s;
+}
+.crewCard:hover {
+  background: #333;
+}
+
+.crewName {
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+  color: #e50914;
+}
+
+.crewJob {
+  font-size: 0.92rem;
+  color: #aaa;
+}
+
+@media (max-width: 700px) {
+  .castSection, .crewSection {
+    padding: 1rem 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .castCard, .crewCard {
+    min-width: 90px;
+    max-width: 120px;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .castCrewWrapper {
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 100vw;
+  }
+  .castTableSection, .crewTableSection {
+    padding: 1rem 0.5rem;
+    border-radius: 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .castCrewWrapper {
+    gap: 1rem;
+  }
+  .castTableSection, .crewTableSection {
+    padding: 0.5rem 0.2rem;
+    border-radius: 0.5rem;
+  }
+  .castImg, .crewImg, .castImgPlaceholder, .crewImgPlaceholder {
+    width: 28px;
+    height: 28px;
+  }
+  .crewJobCell {
+    min-width: 60px;
+  }
+}
