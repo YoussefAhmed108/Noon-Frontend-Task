@@ -1,27 +1,68 @@
 import React from 'react';
-
 import Spinner from '@/components/Spinner';
-
-import styles from '../page.module.css';
-
+import pageStyles from '../page.module.css';
+import styles from './MovieDetailsSkeleton.module.css';
 
 /**
  * Skeleton component displayed while movie details are loading
- * Provides a wireframe layout similar to the actual content
+ * Provides a wireframe layout that closely matches the actual MovieDetails component
+ * with appropriate spacing, dimensions, and responsive behavior
  */
 export default function MovieDetailsSkeleton() {
   return (
-    <div className={styles.movieInfo} style={{ gap: '1rem' }}>
-      <div style={{ width: '300px', height: '450px', background: '#333', borderRadius: '8px' }}></div>
-      <div style={{ flex: '1' }}>
-        <div style={{ height: '40px', width: '70%', background: '#333', borderRadius: '4px', marginBottom: '1rem' }}></div>
-        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
-          <div style={{ height: '30px', width: '80px', background: '#444', borderRadius: '20px' }}></div>
-          <div style={{ height: '30px', width: '80px', background: '#444', borderRadius: '20px' }}></div>
+    <div className={`${pageStyles.movieInfo} ${styles.skeletonContainer}`}>
+      {/* Poster skeleton */}
+      <div className={styles.posterSkeleton}></div>
+      
+      {/* Details container */}
+      <div className={styles.detailsContainer}>
+        {/* Header with title and favorite button */}
+        <div className={styles.headerRow}>
+          <div className={styles.titleSkeleton}></div>
+          <div className={styles.buttonSkeleton}></div>
         </div>
-        <div style={{ height: '20px', width: '40%', background: '#333', borderRadius: '4px', marginBottom: '1rem' }}></div>
-        <div style={{ height: '100px', width: '90%', background: '#333', borderRadius: '4px', marginBottom: '1rem' }}></div>
-        <Spinner />
+        
+        {/* Meta row with genres and info items */}
+        <div className={styles.metaRow}>
+          <div className={styles.genreSkeleton}></div>
+          <div className={styles.genreSkeleton}></div>
+          <div className={styles.genreSkeleton}></div>
+          <div className={styles.metaItemSkeleton}></div>
+          <div className={styles.metaItemSkeleton}></div>
+          <div className={styles.metaItemSkeleton}></div>
+        </div>
+        
+        {/* Overview paragraph */}
+        <div className={styles.overviewSkeleton}></div>
+        
+        {/* Details table */}
+        <div className={styles.detailsTableSkeleton}>
+          <div className={styles.detailsRowSkeleton}>
+            <div className={styles.detailsLabelSkeleton}></div>
+            <div className={styles.detailsValueSkeleton}></div>
+          </div>
+          <div className={styles.detailsRowSkeleton}>
+            <div className={styles.detailsLabelSkeleton}></div>
+            <div className={styles.detailsValueSkeleton}></div>
+          </div>
+          <div className={styles.detailsRowSkeleton}>
+            <div className={styles.detailsLabelSkeleton}></div>
+            <div className={styles.detailsValueSkeleton}></div>
+          </div>
+          <div className={styles.detailsRowSkeleton}>
+            <div className={styles.detailsLabelSkeleton}></div>
+            <div className={styles.detailsValueSkeleton}></div>
+          </div>
+          <div className={styles.detailsRowSkeleton}>
+            <div className={styles.detailsLabelSkeleton}></div>
+            <div className={styles.detailsValueSkeleton}></div>
+          </div>
+        </div>
+        
+        {/* Loading spinner at the bottom */}
+        <div style={{ marginTop: '1rem' }}>
+          <Spinner />
+        </div>
       </div>
     </div>
   );
