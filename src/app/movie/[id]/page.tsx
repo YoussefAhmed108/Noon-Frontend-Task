@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import styles from "./page.module.css";
 import { useFavMovieStore } from "@/stores/useMovieStore";
+import { toast } from 'react-toastify';
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -21,9 +22,36 @@ const MoviePage = () => {
       Authorization: `Bearer ${API_KEY}`,
     },
   };
-
   const [movie, setMovie] = useState<Movie>();
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleAddToFavorites = () => {
+    if (movie) {
+      add(movie);
+      toast.success(`"${movie.original_title}" added to favorites!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  };
+
+  const handleRemoveFromFavorites = () => {
+    if (movie) {
+      remove(movie.id);
+      toast.info(`"${movie.original_title}" removed from favorites!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -101,18 +129,17 @@ const MoviePage = () => {
           </div>
           <div className={styles.infoCol}>
             <div className={styles.headerRow}>
-              <h1 className={styles.title}>{movie?.original_title}</h1>
-              {movie && typeof movie.id === "number" ? (
+              <h1 className={styles.title}>{movie?.original_title}</h1>              {movie && typeof movie.id === "number" ? (
                 isFavourite(movie.id) ? (
                   <button
                     className={styles.rmvFavBtn}
-                    onClick={() => remove(movie.id)}
+                    onClick={handleRemoveFromFavorites}
                   >
                     <span className={styles.favIcon}>💔</span> Remove from
                     Favourites
                   </button>
                 ) : (
-                  <button className={styles.favBtn} onClick={() => add(movie)}>
+                  <button className={styles.favBtn} onClick={handleAddToFavorites}>
                     <span className={styles.favIcon}>🤍</span> Add to Favourites
                   </button>
                 )

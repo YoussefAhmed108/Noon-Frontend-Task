@@ -1,10 +1,10 @@
-.movieCard {
+.cardContainer {
     display: flex;
     flex-direction: column;
-    gap : 0.5rem
+    gap: 0.5rem;
 }
 
-.movieDetails{
+.movieDetails {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;

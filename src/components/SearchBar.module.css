@@ -1,4 +1,4 @@
-.searchbar {
+.searchBar {
     background-color: white;
     color: black;
     padding-left: 0.5rem;
@@ -7,10 +7,9 @@
     border-radius: 4px 0 0 4px;
     width: 80%;
     height: 3.5rem;
-
 }
 
-.searchbar:focus {
+.searchBar:focus {
     outline: none;
     /* border-color: blue; */
 }

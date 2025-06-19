@@ -8,7 +8,7 @@ const FavouritesPage = () => {
   const { movies, add, remove } = useFavMovieStore();
   console.log(movies);
   return (
-    <div>
+    <div className={styles.container}>
       <h1 className={styles.title}>Favourites</h1>
       <div className={styles.moviesGrid}>
         {movies?.length != 0 ? (

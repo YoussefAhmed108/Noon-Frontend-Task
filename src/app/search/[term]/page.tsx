@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import Error from "./error";
 import Spinner from "@/components/Spinner";
@@ -10,60 +10,58 @@ import styles from "./page.module.css";
 import { useParams } from "next/navigation";
 
 const Search = () => {
-  const {term} = useParams();
-  console.log(term);
+  const { term } = useParams();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const {
-    data: movies,
-    isLoading,
-    error,
-  } = useFetch(
-    `https://api.themoviedb.org/3/search/movie?language=en-US&query=${term}&page=${page}&include_adult=false&sort_by=popularity.desc`,
-    {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        accept: "application/json",
-      },
+  const [movies, setMovies] = useState<Movie[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const cacheRef = useRef<{ [key: string]: Movie[] }>({});
+
+  useEffect(() => {
+    const cacheKey = `${term}-${page}`;
+    if (cacheRef.current[cacheKey]) {
+      setMovies(cacheRef.current[cacheKey]);
+      setIsLoading(false);
+      setError(null);
+      console.log(`Loaded page ${page} for term '${term}' from cache.`);
+      return;
     }
-  );
+    setIsLoading(true);
+    setError(null);
+    console.log(`Fetching page ${page} for term '${term}' from API.`);
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?language=en-US&query=${term}&page=${page}&include_adult=false&sort_by=popularity.desc`,
+      {
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+          accept: "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.results) {
+          cacheRef.current[cacheKey] = data.results;
+          setMovies(data.results);
+        } else {
+          setMovies([]);
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || "Error fetching data");
+        setIsLoading(false);
+      });
+  }, [term, page, API_KEY]);
+
   const itemsPerPage = 10;
-  const startIdx = (page - 1) * itemsPerPage;
-  const endIdx = startIdx + itemsPerPage;
-  const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
+  const totalPages = 10; // TMDB returns 20 per page, but you can adjust as needed
 
-  // useEffect(() => {
-  //   const itemsPerPage = 10;
-  //   const startIdx = (page - 1) * itemsPerPage;
-  //   const endIdx = startIdx + itemsPerPage;
-  //   const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
-  //   setPage(1);
-  // }, [filteredMovies]);
-
-  // useEffect(() => {
-
-  // }, [page]);
-
-  // useEffect(() => {
-  //   setFilteredMovies(movies || []);
-  // }, [movies]);
-
-  // const searchMovies = (searchTerm: string) => {
-  //   setFilteredMovies(
-  //     movies
-  //       ? movies.filter((movie) =>
-  //           movie.original_title
-  //             .toLowerCase()
-  //             .includes(searchTerm.toLowerCase())
-  //         )
-  //       : []
-  //   );
-  // };
   if (error) return <Error />;
   if (isLoading) return <Spinner />;
-  console.log(filteredMovies);
+
   return (
     <div className={styles.container}>
       <span className={styles.searchBar}>
@@ -74,10 +72,8 @@ const Search = () => {
         <button>Search</button>
       </span>
       <div className={styles.moviesGrid}>
-        {movies?.length != 0 ? (
-          movies?.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))
+        {movies && movies.length !== 0 ? (
+          movies.map((movie) => <MovieCard movie={movie} key={movie.id} />)
         ) : (
           <span className={styles.noMovies}>
             No Movies found for this search term

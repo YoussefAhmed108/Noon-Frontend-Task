@@ -1,25 +1,47 @@
 import React, { useState } from "react";
-import styles from "./SearchBar.module.css"; // Assuming you have a CSS module for styling
-import Link from "next/link";
+import styles from "./SearchBar.module.css";
+import { useRouter } from "next/navigation";
+
 const SearchBar = () => {
-  const[searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/search/${searchTerm.trim()}`);
+    }
+  };
+
   return (
-    <div className={styles.searchContainer}>
-      <input
+    <form
+      className={styles.searchContainer}
+      role="search"
+      aria-label="Movie search form"
+      onSubmit={handleSubmit}
+    >      <input
         type="text"
         placeholder="Search Movie Title..."
-        className={styles.searchbar}
+        className={styles.searchBar}
         onChange={handleSearchChange}
+        aria-label="Search movies by title"
+        aria-describedby="search-button"
+        value={searchTerm}
       />
-      <button className={styles.searchButton}>
-        <Link href={`/search/${searchTerm}`}>
-          <SearchIcon/>
-        </Link>
+      <button
+        className={styles.searchButton}
+        id="search-button"
+        aria-label="Search"
+        type="submit"
+        disabled={!searchTerm.trim()}
+      >
+        <SearchIcon />
       </button>
-    </div>
+    </form>
   );
 };
 
@@ -33,19 +55,18 @@ export function SearchIcon({ size = "2em" }: SearchIconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 28 28" /* larger canvas */
+      viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.searchIcon} 
+      className={styles.searchIcon}
+      aria-hidden="true"
+      focusable="false"
     >
-      {/* main circle */}
       <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="3" />
-
-      {/* longer handle */}
       <line
         x1="17"
         y1="17"
-        x2="22" /* reaches bottom-right corner */
+        x2="22"
         y2="22"
         stroke="currentColor"
         strokeWidth="3"
