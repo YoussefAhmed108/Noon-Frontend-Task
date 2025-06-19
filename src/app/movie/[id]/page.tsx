@@ -24,6 +24,7 @@ const MoviePage = () => {
   };
   const [movie, setMovie] = useState<Movie>();
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleAddToFavorites = () => {
     if (movie) {
@@ -68,6 +69,21 @@ const MoviePage = () => {
       });
   }, [url]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 480);
+    };
+    
+    // Initial check
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const trailer = movie?.videos?.results?.find(
     (video) =>
       video.site === "YouTube" &&
@@ -103,15 +119,15 @@ const MoviePage = () => {
       className={styles.backdropContainer}
       style={{
         backgroundImage: movie?.backdrop_path
-          ? `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${getBackdropUrl(
+          ? `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url(${getBackdropUrl(
               movie.backdrop_path
             )})`
           : undefined,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundAttachment: "fixed",
         minHeight: "100vh",
         color: "#fff",
-        padding: "2rem",
       }}
     >
       <div className={styles.centerCard}>
@@ -129,24 +145,28 @@ const MoviePage = () => {
           </div>
           <div className={styles.infoCol}>
             <div className={styles.headerRow}>
-              <h1 className={styles.title}>{movie?.original_title}</h1>              {movie && typeof movie.id === "number" ? (
-                isFavourite(movie.id) ? (
-                  <button
-                    className={styles.rmvFavBtn}
-                    onClick={handleRemoveFromFavorites}
-                  >
-                    <span className={styles.favIcon}>💔</span> Remove from
-                    Favourites
-                  </button>
-                ) : (
-                  <button className={styles.favBtn} onClick={handleAddToFavorites}>
-                    <span className={styles.favIcon}>🤍</span> Add to Favourites
-                  </button>
-                )
+              <h1 className={styles.title}>{movie?.original_title}</h1>
+              {movie && typeof movie.id === "number" ? (
+                <div className={styles.buttonContainer}>
+                  {isFavourite(movie.id) ? (
+                    <button
+                      className={styles.rmvFavBtn}
+                      onClick={handleRemoveFromFavorites}
+                    >
+                      <span className={styles.favIcon}>💔</span> {!isMobile && "Remove from Favourites"}
+                      {isMobile && "Remove"}
+                    </button>
+                  ) : (
+                    <button className={styles.favBtn} onClick={handleAddToFavorites}>
+                      <span className={styles.favIcon}>🤍</span> {!isMobile && "Add to Favourites"}
+                      {isMobile && "Add"}
+                    </button>
+                  )}
+                </div>
               ) : null}
             </div>
             <div className={styles.metaRow}>
-              {movie?.genres?.slice(0, 3).map((g) => (
+              {movie?.genres?.slice(0, isMobile ? 2 : 3).map((g) => (
                 <span className={styles.genreTag} key={g.id}>
                   {g.name}
                 </span>
@@ -182,16 +202,18 @@ const MoviePage = () => {
         <div className={styles.trailerSection}>
           <h2 className={styles.trailerTitle}>Trailer</h2>
           {trailer ? (
-            <iframe
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${trailer.key}`}
-              title={trailer.name}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className={styles.trailer}
-            ></iframe>
+            <div className={styles.trailerWrapper}>
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${trailer.key}`}
+                title={trailer.name}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className={styles.trailer}
+              ></iframe>
+            </div>
           ) : (
             <div className={styles.noTrailer}>No trailer available</div>
           )}

@@ -11,7 +11,8 @@ import { useParams } from "next/navigation";
 
 const Search = () => {
   const { term } = useParams();
-  const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
+  const API_KEY = process.env.API_KEY;
+  console.log("API_KEY:", API_KEY);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState<Movie[] | null>(null);
