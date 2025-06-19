@@ -1,13 +1,14 @@
 import React from 'react';
- 
-import Search from './page';
 
-const layout = () => {
-  return (
-    <div>
-      <Search/>
-    </div>
-  );
-};
-
-export default layout;
+/**
+ * Layout for search results pages
+ * Wraps the search page component with any layout elements
+ * @param props.children - The page component that will be rendered
+ */
+export default function SearchLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
+}

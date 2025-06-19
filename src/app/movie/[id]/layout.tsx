@@ -1,13 +1,14 @@
 import React from 'react';
 
-import MoviePage from './page';
-
-const layout = () => {
-  return (
-    <div>
-      <MoviePage/>
-    </div>
-  );
-};
-
-export default layout;
+/**
+ * Layout for movie detail pages
+ * Wraps the movie page component with any layout elements
+ * @param props.children - The page component that will be rendered
+ */
+export default function MovieLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
+}

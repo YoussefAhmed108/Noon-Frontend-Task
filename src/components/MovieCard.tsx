@@ -43,8 +43,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   };
 
   return (
-    <div className={styles.cardContainer}>
-      <Link href={`/movie/${movie.id}`}>
+    <div className={styles.cardContainer}>      <Link href={`/movie/${movie.id}`} prefetch>
         <Image
           src={getPosterUrl(movie.poster_path)}
           alt={movie.original_title + ' poster'}

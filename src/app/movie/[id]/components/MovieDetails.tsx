@@ -11,6 +11,11 @@ interface MovieDetailsProps {
   isMobile: boolean;
 }
 
+/**
+ * Component for displaying detailed movie information
+ * @param props - Contains the movie object and isMobile flag for responsive display
+ * @returns React component with formatted movie details
+ */
 const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, isMobile }) => {
   // Helper for genres
   const genreNames = movie?.genres?.map((g) => g.name).join(', ');

@@ -12,6 +12,11 @@ interface MovieBannerProps {
   movie: Movie;
 }
 
+/**
+ * Component for displaying the movie poster image
+ * @param props - Contains the movie object with poster_path
+ * @returns React component with movie poster image
+ */
 const MovieBanner: React.FC<MovieBannerProps> = ({ movie }) => {
   return (
     <div className={styles.posterCol}>

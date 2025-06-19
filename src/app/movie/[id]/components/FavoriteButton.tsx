@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { toast } from 'react-toastify';
@@ -12,6 +14,11 @@ interface FavoriteButtonProps {
   isMobile: boolean;
 }
 
+/**
+ * Client Component for adding/removing a movie from favorites
+ * @param props - Contains the movie object and isMobile flag for responsive display
+ * @returns React component with favorite toggle button
+ */
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movie, isMobile }) => {
   const { isFavourite, add, remove } = useFavMovieStore();
 

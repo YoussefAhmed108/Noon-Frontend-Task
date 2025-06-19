@@ -10,6 +10,11 @@ interface CastAndCrewProps {
   movie: Movie;
 }
 
+/**
+ * Component for displaying movie cast and crew information
+ * @param props - Contains the movie object with credits information
+ * @returns React component with formatted cast and crew details
+ */
 const CastAndCrew: React.FC<CastAndCrewProps> = ({ movie }) => {
   if (!movie?.credits?.cast?.length && !movie?.credits?.crew?.length) {
     return null;

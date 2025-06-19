@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from "react";
 
-import { Movie } from '@/types/movie';
+import { useFetch } from "./useFetch";
+import { Movie } from "@/types/movie";
 
 interface UsePaginationOptions {
   term: string;
@@ -56,96 +57,88 @@ export const usePagination = ({
     }
   }, [term]);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      // Don't proceed if API key is missing
-      if (!apiKey) {
-        setError(
-          'API key is missing. Please check your environment variables.'
-        );
-        setIsLoading(false);
-        return;
-      }
+  // Construct the API URL and config based on current state
+  const url = useMemo(() => {
+    if (!term.trim()) return "";
+    return `https://api.themoviedb.org/3/search/movie?language=en-US&query=${encodeURIComponent(
+      term
+    )}&page=${page}&include_adult=false&sort_by=popularity.desc`;
+  }, [term, page]);
 
-      // Don't proceed if search term is empty
-      if (!term.trim()) {
-        setMovies([]);
-        setTotalResults(0);
-        setTotalPages(0);
-        setIsLoading(false);
-        setError(null);
-        return;
-      }
-
-      const cacheKey = `${term}-${page}`;
-
-      // Return data from cache if available
-      if (cacheRef.current[cacheKey]) {
-        const cachedData = cacheRef.current[cacheKey];
-        setMovies(cachedData.results);
-        setTotalResults(cachedData.totalResults);
-        setTotalPages(Math.min(cachedData.totalPages, maxPages));
-        setIsLoading(false);
-        setError(null);
-        return;
-      }
-
-      // Otherwise fetch from API
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?language=en-US&query=${encodeURIComponent(
-            term
-          )}&page=${page}&include_adult=false&sort_by=popularity.desc`,
-          {
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-              accept: 'application/json',
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            `API error: ${response.status} ${response.statusText}`
-          );
-        }
-
-        const data = await response.json();
-
-        if (data.success === false) {
-          throw new Error(data.status_message || 'Error from TMDB API');
-        }
-
-        if (data && data.results) {
-          // Store in cache
-          cacheRef.current[cacheKey] = {
-            results: data.results,
-            totalResults: data.total_results || 0,
-            totalPages: data.total_pages || 1,
-          };
-
-          setMovies(data.results);
-          setTotalResults(data.total_results || 0);
-          setTotalPages(Math.min(data.total_pages || 1, maxPages));
-        } else {
-          setMovies([]);
-          setTotalResults(0);
-          setTotalPages(0);
-        }
-      } catch (err: any) {
-        console.error('Search API error:', err);
-        setError(err.message || 'Error fetching data');
-        setMovies([]);
-      } finally {
-        setIsLoading(false);
-      }
+  const config = useMemo(() => {
+    return {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        accept: "application/json",
+      },
     };
+  }, [apiKey]);
+  
+  // Use the useFetch hook to fetch data
+  const {
+    data: fetchedData,
+    isLoading: fetchLoading,
+    error: fetchError,
+  } = useFetch(url, url ? config : undefined);
 
-    fetchMovies();
-  }, [term, page, apiKey, maxPages]);
+  // Handle the API response
+  useEffect(() => {
+    // Don't proceed if API key is missing
+    if (!apiKey) {
+      setError("API key is missing. Please check your environment variables.");
+      setIsLoading(false);
+      return;
+    }
+
+    // Don't proceed if search term is empty
+    if (!term.trim()) {
+      setMovies([]);
+      setTotalResults(0);
+      setTotalPages(0);
+      setIsLoading(false);
+      setError(null);
+      return;
+    }
+
+    const cacheKey = `${term}-${page}`;
+
+    // Return data from cache if available
+    if (cacheRef.current[cacheKey]) {
+      const cachedData = cacheRef.current[cacheKey];
+      setMovies(cachedData.results);
+      setTotalResults(cachedData.totalResults);
+      setTotalPages(Math.min(cachedData.totalPages, maxPages));
+      setIsLoading(false);
+      setError(null);
+      return;
+    }
+
+    // Update state based on fetch results
+    setIsLoading(fetchLoading);
+
+    if (fetchError) {
+      setError(fetchError);
+      setMovies([]);
+      return;
+    }
+
+    if (fetchedData) {
+      // Store results in cache
+      cacheRef.current[cacheKey] = {
+        results: fetchedData.results,
+        totalResults: fetchedData.total_results || 0,
+        totalPages: fetchedData.total_pages || 1,
+      };
+
+      setMovies(fetchedData.results);
+      setTotalResults(fetchedData.total_results || 0);
+      setTotalPages(Math.min(fetchedData.total_pages || 1, maxPages));
+    } else if (!fetchLoading) {
+      setMovies([]);
+      setTotalResults(0);
+      setTotalPages(0);
+    }
+  }, [term, page, apiKey, maxPages, fetchedData, fetchLoading, fetchError]);
 
   const hasNextPage = page < totalPages;
   const hasPreviousPage = page > 1;

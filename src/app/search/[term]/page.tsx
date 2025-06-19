@@ -10,6 +10,7 @@ import { usePagination } from '@/hooks/usePagination';
 
 import Error from './error';
 import styles from './page.module.css';
+import SearchLoading from './loading';
 
 const Search = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const Search = () => {
   };
 
   if (error) return <Error error={error} reset={() => {}} />;
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <SearchLoading />;
 
   return (
     <div className={styles.container}>

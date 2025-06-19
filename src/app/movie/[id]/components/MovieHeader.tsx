@@ -10,6 +10,11 @@ interface MovieHeaderProps {
   isMobile: boolean;
 }
 
+/**
+ * Component for displaying the movie title and favorite button
+ * @param props - Contains the movie object and isMobile flag
+ * @returns React component with movie title and favorite button
+ */
 const MovieHeader: React.FC<MovieHeaderProps> = ({ movie, isMobile }) => {
   return (
     <div className={styles.headerRow}>

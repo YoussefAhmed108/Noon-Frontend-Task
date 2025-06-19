@@ -50,19 +50,23 @@ export interface Movie {
       job: string;
     }>;
     
+  };  videos: {
+    results: Array<VideoTrailer>;
   };
-  videos: {
-    results: Array<{
-      id: string;
-      iso_639_1: string;
-      iso_3166_1: string;
-      key: string;
-      name: string;
-      official: boolean;
-      published_at: string;
-      site: string;
-      size: number;
-      type: string;
-    }>;
-  };
+}
+
+/**
+ * Interface representing a video trailer from TMDB API
+ */
+export interface VideoTrailer {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  official: boolean;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
 }

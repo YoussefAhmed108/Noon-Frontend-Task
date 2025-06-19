@@ -1,16 +1,17 @@
 import React from 'react';
+import { VideoTrailer } from '@/types/movie';
 
 import styles from './components.module.css';
 
-interface Trailer {
-    key: string;
-    name: string;
-}
-
 interface MovieTrailerProps {
-  trailer: Trailer | undefined;
+  trailer: VideoTrailer | undefined;
 }
 
+/**
+ * Component for displaying a YouTube movie trailer
+ * @param props - Contains the trailer object with YouTube key and other metadata
+ * @returns React component with embedded YouTube player or "no trailer" message
+ */
 const MovieTrailer: React.FC<MovieTrailerProps> = ({ trailer }) => {
   return (
     <div className={styles.trailerSection}>
