@@ -1,13 +1,15 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Movie, VideoTrailer } from "@/types/movie";
-import { getBackdropUrl } from "@/app/utils/tmdb";
-import MovieBanner from "./components/MovieBanner";
-import MovieDetails from "./components/MovieDetails";
-import MovieTrailer from "./components/MovieTrailer";
-import CastAndCrew from "./components/CastAndCrew";
-import styles from "./page.module.css";
+import React, { useEffect, useState } from 'react';
+import { getBackdropUrl } from '@/app/utils/tmdb';
+import { Movie, VideoTrailer } from '@/types/movie';
+
+import CastAndCrew from './components/CastAndCrew';
+import MovieBanner from './components/MovieBanner';
+import MovieDetails from './components/MovieDetails';
+import MovieTrailer from './components/MovieTrailer';
+
+import styles from './page.module.css';
 
 interface MovieClientProps {
   movie: Movie;
@@ -35,10 +37,10 @@ export default function MovieClient({ movie, trailer }: MovieClientProps) {
     handleResize();
 
     // Add resize listener
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     // Cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Handle backdrop image preloading

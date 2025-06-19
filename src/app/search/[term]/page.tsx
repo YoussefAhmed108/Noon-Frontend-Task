@@ -5,12 +5,14 @@ import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import MovieCard from '@/components/MovieCard';
-import Spinner from '@/components/Spinner';
+
 import { usePagination } from '@/hooks/usePagination';
 
 import Error from './error';
-import styles from './page.module.css';
 import SearchLoading from './loading';
+
+import styles from './page.module.css';
+
 
 const Search = () => {
   const router = useRouter();

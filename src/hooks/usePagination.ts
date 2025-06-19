@@ -1,9 +1,10 @@
-"use client";
+'use client';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { Movie } from '@/types/movie';
 
-import { useFetch } from "./useFetch";
-import { Movie } from "@/types/movie";
+import { useFetch } from './useFetch';
+
 
 interface UsePaginationOptions {
   term: string;
@@ -59,7 +60,7 @@ export const usePagination = ({
 
   // Construct the API URL and config based on current state
   const url = useMemo(() => {
-    if (!term.trim()) return "";
+    if (!term.trim()) return '';
     return `https://api.themoviedb.org/3/search/movie?language=en-US&query=${encodeURIComponent(
       term
     )}&page=${page}&include_adult=false&sort_by=popularity.desc`;
@@ -69,7 +70,7 @@ export const usePagination = ({
     return {
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        accept: "application/json",
+        accept: 'application/json',
       },
     };
   }, [apiKey]);
@@ -85,7 +86,7 @@ export const usePagination = ({
   useEffect(() => {
     // Don't proceed if API key is missing
     if (!apiKey) {
-      setError("API key is missing. Please check your environment variables.");
+      setError('API key is missing. Please check your environment variables.');
       setIsLoading(false);
       return;
     }

@@ -11,7 +11,7 @@ async function MovieDetails({ id }: { id: string }) {
   const movie = await fetchMovieData(id, {
     cacheTime: 3600, // 1 hour cache
     language: 'en-US',
-    appendToResponse: ['credits', 'videos']
+    appendToResponse: ['credits', 'videos'],
   });
   const trailer = findOfficialTrailer(movie);
   
