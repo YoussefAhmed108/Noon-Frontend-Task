@@ -1,22 +1,43 @@
 "use client";
 import MovieCard from "@/components/MovieCard";
 import { useFavMovieStore } from "@/stores/useMovieStore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 const FavouritesPage = () => {
-  const { movies, add, remove } = useFavMovieStore();
-  console.log(movies);
+  const { movies } = useFavMovieStore();
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure we only render after client-side hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Favourites</h1>
-      <div className={styles.moviesGrid}>
-        {movies?.length != 0 ? (
-          movies?.map((movie) => <MovieCard movie={movie} key={movie.id} />)
+    <div className={styles.pageWrapper}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>My Favorites</h1>
+        {mounted && movies?.length > 0 ? (
+          <div className={styles.moviesGrid}>
+            {movies.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))}
+          </div>
         ) : (
-          <span className={styles.noMovies}>
-            No Movies found for this search term
-          </span>
+          <div className={styles.emptyStateContainer}>
+            <div className={styles.emptyStateIcon}>💔</div>
+            <div className={styles.emptyStateText}>
+              {mounted
+                ? "You haven't added any favorite movies yet. Browse movies to find your favorites!"
+                : "Loading your favorite movies..."}
+            </div>
+            {mounted && (
+              <Link href="/">
+                <button className={styles.browseButton}>Browse Movies</button>
+              </Link>
+            )}
+          </div>
         )}
       </div>
     </div>
