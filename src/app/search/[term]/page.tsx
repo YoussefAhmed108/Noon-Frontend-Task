@@ -1,98 +1,109 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { useFetch } from "@/hooks/useFetch";
+import React, { useState } from "react";
 import Error from "./error";
 import Spinner from "@/components/Spinner";
 import MovieCard from "@/components/MovieCard";
-import { Movie } from "@/types/movie";
 import styles from "./page.module.css";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { usePagination } from "@/hooks/usePagination";
 
 const Search = () => {
+  const router = useRouter();
   const { term } = useParams();
-  const API_KEY = process.env.API_KEY;
-  console.log("API_KEY:", API_KEY);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [page, setPage] = useState(1);
-  const [movies, setMovies] = useState<Movie[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const cacheRef = useRef<{ [key: string]: Movie[] }>({});
+  const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
+  const [searchTerm, setSearchTerm] = useState(String(term));
+  
+  const { 
+    movies,
+    isLoading,
+    error,
+    page,
+    totalPages,
+    totalResults,
+    hasNextPage,
+    hasPreviousPage,
+    goToNextPage,
+    goToPreviousPage
+  } = usePagination({
+    term: String(term),
+    apiKey: API_KEY || "",
+    maxPages: 10
+  });
 
-  useEffect(() => {
-    const cacheKey = `${term}-${page}`;
-    if (cacheRef.current[cacheKey]) {
-      setMovies(cacheRef.current[cacheKey]);
-      setIsLoading(false);
-      setError(null);
-      console.log(`Loaded page ${page} for term '${term}' from cache.`);
-      return;
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
     }
-    setIsLoading(true);
-    setError(null);
-    console.log(`Fetching page ${page} for term '${term}' from API.`);
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?language=en-US&query=${term}&page=${page}&include_adult=false&sort_by=popularity.desc`,
-      {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          accept: "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.results) {
-          cacheRef.current[cacheKey] = data.results;
-          setMovies(data.results);
-        } else {
-          setMovies([]);
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message || "Error fetching data");
-        setIsLoading(false);
-      });
-  }, [term, page, API_KEY]);
+  };
 
-  const itemsPerPage = 10;
-  const totalPages = 10; // TMDB returns 20 per page, but you can adjust as needed
-
-  if (error) return <Error />;
+  if (error) return <Error error={error} reset={() => {}} />;
   if (isLoading) return <Spinner />;
-
+  
   return (
     <div className={styles.container}>
-      <span className={styles.searchBar}>
+      <form onSubmit={handleSearch} className={styles.searchBar}>
         <input
+          type="text"
+          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search By Movie title..."
+          placeholder="Search by movie title..."
+          className={styles.searchInput}
         />
-        <button>Search</button>
-      </span>
+        <button 
+          type="submit" 
+          className={styles.searchButton}
+          disabled={!searchTerm.trim()}
+        >
+          Search
+        </button>
+      </form>
+      
+      {movies && (
+        <div className={styles.resultsInfo}>
+          <h1 className={styles.searchTitle}>
+            {totalResults > 0 
+              ? `Results for "${term}"` 
+              : `No results found for "${term}"`
+            }
+          </h1>
+          <p className={styles.resultsCount}>
+            {totalResults > 0 && `Found ${totalResults} movies`}
+          </p>
+        </div>
+      )}
+      
       <div className={styles.moviesGrid}>
         {movies && movies.length !== 0 ? (
           movies.map((movie) => <MovieCard movie={movie} key={movie.id} />)
         ) : (
-          <span className={styles.noMovies}>
-            No Movies found for this search term
-          </span>
+          <div className={styles.noMovies}>
+            <p>No movies found for this search term</p>
+            <p>Try searching for something else</p>
+          </div>
         )}
       </div>
-      <div className={styles.pagination}>
-        <button disabled={page == 1} onClick={() => setPage((p) => p - 1)}>
-          Previous
-        </button>
-        <p>Page {page}</p>
-        <button
-          disabled={page == totalPages}
-          onClick={() => setPage((p) => p + 1)}
-        >
-          Next
-        </button>
-      </div>
+      
+      {totalResults > 0 && (
+        <div className={styles.pagination}>
+          <button 
+            disabled={!hasPreviousPage} 
+            onClick={goToPreviousPage}
+            className={styles.paginationButton}
+          >
+            Previous
+          </button>
+          <p className={styles.pageIndicator}>Page {page} of {totalPages}</p>
+          <button
+            disabled={!hasNextPage}
+            onClick={goToNextPage}
+            className={styles.paginationButton}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

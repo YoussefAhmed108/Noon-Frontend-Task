@@ -33,6 +33,68 @@
   padding-bottom: 4rem;
 }
 
+.pageWrapper {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Empty state styling */
+.emptyStateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.emptyStateIcon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.emptyStateText {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.browseButton {
+  background-color: #e50914;
+  color: white;
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.browseButton:hover {
+  background-color: #c70811;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
   .moviesGrid {
@@ -56,6 +118,25 @@
   .container {
     margin: 1.5rem 0.8rem;
   }
+  
+  .emptyStateContainer {
+    padding: 2.5rem 1.5rem;
+    margin: 1.5rem auto;
+  }
+  
+  .emptyStateIcon {
+    font-size: 4rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .emptyStateText {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .browseButton {
+    padding: 0.7rem 1.7rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -78,5 +159,25 @@
   .noMovies {
     font-size: 1.1rem;
     padding: 1.5rem 1rem;
+  }
+  
+  .emptyStateContainer {
+    padding: 2rem 1rem;
+    margin: 1rem auto;
+  }
+  
+  .emptyStateIcon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .emptyStateText {
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .browseButton {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
   }
 }

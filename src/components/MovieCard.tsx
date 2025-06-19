@@ -53,7 +53,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
       </Link>
       <div className={styles.movieDetails}>
         <div className={styles.movieTitleAndRating}>
-          <p>{movie.original_title}</p>
+          <p className={styles.movieTitle}>{movie.original_title}</p>
           <p>{movie.vote_average.toPrecision(2)}&#9733;</p>
         </div>
         <div className={styles.movieDateAndButton}>

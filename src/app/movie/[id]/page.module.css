@@ -22,6 +22,63 @@
   opacity: 0.90;
 }
 
+.movieInfo {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .centerCard {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .backdropContainer {
+    padding: 1rem;
+  }
+  
+  .movieInfo {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .centerCard {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .backdropContainer {
+    padding: 0.5rem;
+  }
+  
+  .centerCard {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .backdropContainer {
+    padding: 0.5rem 0;
+  }
+  
+  .centerCard {
+    padding: 0.8rem;
+    gap: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    gap: 2.5rem;
+  opacity: 0.90;
+  }
+}
+
 .posterCol {
   flex: 0 0 260px;
   display: flex;
