@@ -8,9 +8,9 @@ import styles from './page.module.css';
  */
 export default function FavoritesLoading() {
   return (
-    <div className={styles.container} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh' }}>
+    <div className={styles.loadingContainer}>
       <Spinner />
-      <h2 style={{ marginTop: '2rem' }}>Loading your favorites...</h2>
+      <h2 className={styles.loadingText}>Loading your favorites...</h2>
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-MovieFlix is a modern web application built with Next.js that allows users to discover, search, and save their favorite movies. The application uses The Movie Database (TMDB) API to fetch movie data and provides a seamless user experience with server-side rendering, responsive design, and smooth animations.
+The Movie Database is a modern web application built with Next.js that allows users to discover, search, and save their favorite movies. The application uses The Movie Database (TMDB) API to fetch movie data and provides a seamless user experience with server-side rendering, responsive design, and smooth animations.
 
 Key features include:
 - Browse popular movies on the homepage
@@ -30,12 +30,8 @@ cd Noon-Frontend-Task
 
 2. Install dependencies:
 ```bash
-# Using Bun (recommended)
-bun install
 
-# Or using npm
-npm install
-```
+bun install
 
 3. Create a `.env.local` file in the root directory and add your TMDB API key:
 ```
@@ -46,9 +42,6 @@ API_KEY=your_tmdb_api_key_here
 ```bash
 # Using Bun
 bun run dev
-
-# Or using npm
-npm run dev
 ```
 
 5. Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
@@ -61,16 +54,12 @@ To create an optimized production build:
 # Using Bun
 bun run build
 bun run start
-
-# Or using npm
-npm run build
-npm run start
 ```
 
 ## Architecture & Design Decisions
 
 ### Tech Stack
-- **Next.js 14**: Leveraging the App Router for improved routing and server-side rendering capabilities
+- **Next.js 14**: For improved routing and server-side rendering capabilities
 - **TypeScript**: For type safety and improved developer experience
 - **CSS Modules**: For component-scoped styling without conflicts
 - **Zustand**: For global state management (favorites functionality)
@@ -127,5 +116,3 @@ Several techniques were implemented to ensure optimal performance:
 - **Accessibility**: Focus on keyboard navigation and screen reader compatibility
 
 ---
-
-Project developed for the Noon Frontend Task.

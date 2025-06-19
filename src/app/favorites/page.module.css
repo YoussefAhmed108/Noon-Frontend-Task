@@ -95,6 +95,21 @@
   }
 }
 
+/* Loading state styling */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.loadingText {
+  margin-top: 2rem;
+  color: #888;
+  font-size: 1.2rem;
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
   .moviesGrid {

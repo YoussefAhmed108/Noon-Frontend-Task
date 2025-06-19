@@ -119,6 +119,13 @@
   opacity: 0.7;
 }
 
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem;

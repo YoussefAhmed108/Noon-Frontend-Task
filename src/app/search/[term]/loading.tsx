@@ -8,7 +8,7 @@ import styles from './page.module.css';
  */
 export default function SearchLoading() {
   return (
-    <div className={styles.container} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh' }}>
+    <div className={`${styles.container} ${styles.loadingContainer}`}>
       <Spinner />
     </div>
   );
