@@ -26,7 +26,6 @@ export function useFetch(
   const [data, setData] = useState<SearchResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     let isMounted = true;
     
@@ -41,6 +40,9 @@ export function useFetch(
     setIsLoading(true);
     setError(null);
 
+    // Use a stable identifier for the request
+    const requestId = url + (config?.headers?.Authorization || '');
+    
     axios(url, config)
       .then((response) => {
         if (isMounted) {
@@ -57,7 +59,8 @@ export function useFetch(
     return () => {
       isMounted = false;
     };
-  }, [url, JSON.stringify(config)]);
+    // Only depend on url and Authorization header which should be stable
+  }, [url, config?.headers?.Authorization]);
 
   return { data, isLoading, error };
 }

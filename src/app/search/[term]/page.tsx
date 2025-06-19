@@ -18,7 +18,7 @@ const Search = () => {
   const router = useRouter();
   const { term } = useParams();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
-  const [searchTerm, setSearchTerm] = useState(String(term));
+  const [searchTerm, setSearchTerm] = useState(decodeURIComponent(String(term)));
 
   const {
     movies,
@@ -34,7 +34,7 @@ const Search = () => {
   } = usePagination({
     term: String(term),
     apiKey: API_KEY || '',
-    maxPages: 10,
+    maxPages: 50,
   });
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,14 +64,12 @@ const Search = () => {
         >
           Search
         </button>
-      </form>
-
-      {movies && (
+      </form>      {movies && (
         <div className={styles.resultsInfo}>
           <h1 className={styles.searchTitle}>
             {totalResults > 0
-              ? `Results for '${term}'`
-              : `No results found for '${term}'`}
+              ? `Results for '${decodeURIComponent(String(term))}'`
+              : `No results found for '${decodeURIComponent(String(term))}'`}
           </h1>
           <p className={styles.resultsCount}>
             {totalResults > 0 && `Found ${totalResults} movies`}

@@ -8,9 +8,13 @@ type BackdropSize = 'w300'|'w780'|'w1280'|'original';
  * Returns the full URL for a movie poster image from TMDB.
  * @param path - The poster path returned by TMDB API (e.g., '/abc123.jpg').
  * @param size - The desired poster size (default: 'w500').
- * @returns The full image URL as a string.
+ * @returns The full image URL as a string, or a placeholder if path is invalid.
  */
-export function getPosterUrl(path: string, size: PosterSize = 'w500') {
+export function getPosterUrl(path: string | null | undefined, size: PosterSize = 'w500') {
+  if (!path) {
+    // Return a placeholder image URL or null
+    return '/placeholder.jpeg'; // Create this placeholder image in your public folder
+  }
   return `${TMDB_IMAGE_BASE}${size}${path}`;
 }
 
@@ -18,9 +22,13 @@ export function getPosterUrl(path: string, size: PosterSize = 'w500') {
  * Returns the full URL for a movie backdrop image from TMDB.
  * @param path - The backdrop path returned by TMDB API (e.g., '/abc123.jpg').
  * @param size - The desired backdrop size (default: 'w780').
- * @returns The full image URL as a string.
+ * @returns The full image URL as a string, or a placeholder if path is invalid.
  */
-export function getBackdropUrl(path: string, size: BackdropSize = 'w780') {
+export function getBackdropUrl(path: string | null | undefined, size: BackdropSize = 'w780') {
+  if (!path) {
+    // Return a placeholder image URL or null
+    return '/placeholder-backdrop.jpg'; // Create this placeholder image in your public folder
+  }
   return `${TMDB_IMAGE_BASE}${size}${path}`;
 }
 
