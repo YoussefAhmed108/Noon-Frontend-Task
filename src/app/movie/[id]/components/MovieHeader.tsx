@@ -1,7 +1,9 @@
 import React from 'react';
-import { Movie } from "@/types/movie";
-import styles from "./components.module.css";
+
+import { Movie } from '@/types/movie';
+
 import FavoriteButton from './FavoriteButton';
+import styles from './components.module.css';
 
 interface MovieHeaderProps {
   movie: Movie;

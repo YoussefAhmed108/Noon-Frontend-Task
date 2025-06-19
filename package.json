@@ -1,12 +1,13 @@
 {
   "name": "noon-test",
   "version": "0.1.0",
-  "private": true,
-  "scripts": {
+  "private": true,  "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "fix-lint": "node scripts/fix-lint.js"
   },
   "dependencies": {
     "axios": "^1.10.0",

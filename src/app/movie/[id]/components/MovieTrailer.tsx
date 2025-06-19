@@ -1,8 +1,14 @@
 import React from 'react';
-import styles from "./components.module.css";
+
+import styles from './components.module.css';
+
+interface Trailer {
+    key: string;
+    name: string;
+}
 
 interface MovieTrailerProps {
-  trailer: any | undefined;
+  trailer: Trailer | undefined;
 }
 
 const MovieTrailer: React.FC<MovieTrailerProps> = ({ trailer }) => {
@@ -12,15 +18,15 @@ const MovieTrailer: React.FC<MovieTrailerProps> = ({ trailer }) => {
       {trailer ? (
         <div className={styles.trailerWrapper}>
           <iframe
-            width="100%"
-            height="100%"
+            width='100%'
+            height='100%'
             src={`https://www.youtube.com/embed/${trailer.key}`}
             title={trailer.name}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            frameBorder='0'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
             className={styles.trailer}
-          ></iframe>
+          />
         </div>
       ) : (
         <div className={styles.noTrailer}>No trailer available</div>

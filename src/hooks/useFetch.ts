@@ -1,8 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import axios, { AxiosRequestConfig } from "axios";
-import { Movie } from "@/types/movie";
+import { useEffect, useState } from 'react';
+
+import axios, { AxiosRequestConfig } from 'axios';
+
+import { Movie } from '@/types/movie';
 
 interface UseFetchResult {
   data: Movie[] | null;
@@ -12,7 +14,7 @@ interface UseFetchResult {
 
 export function useFetch(
   url: string,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): UseFetchResult {
   const [data, setData] = useState<Movie[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -26,15 +28,13 @@ export function useFetch(
     axios(url, config)
       .then((response) => {
         if (isMounted) {
-          console.log("Fetched Page");
-          console.log(response.data);
           setData(response.data.results);
           setIsLoading(false);
         }
       })
       .catch((err) => {
         if (isMounted) {
-          setError(err.message || "Error fetching data");
+          setError(err.message || 'Error fetching data');
           setIsLoading(false);
         }
       });

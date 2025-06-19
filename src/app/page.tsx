@@ -1,9 +1,9 @@
-"use client"
-import { useState, useEffect } from "react";
-import styles from "./page.module.css";
-import SearchBar from "@/components/SearchBar";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useState, useEffect } from 'react';
+
+import SearchBar from '@/components/SearchBar';
+
+import styles from './page.module.css';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);

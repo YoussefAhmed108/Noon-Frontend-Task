@@ -37,7 +37,6 @@ export interface Movie {
       id: number;
       known_for_department: string;
       name: string;
-      [key: string]: any;
     }>;
     crew: Array<{
       adult: boolean;
@@ -45,9 +44,8 @@ export interface Movie {
       id: number;
       known_for_department: string;
       name: string;
-      [key: string]: any;
     }>;
-    [key: string]: any;
+    
   };
   videos: {
     results: Array<{
@@ -61,7 +59,6 @@ export interface Movie {
       site: string;
       size: number;
       type: string;
-      [key: string]: any;
     }>;
   };
 }

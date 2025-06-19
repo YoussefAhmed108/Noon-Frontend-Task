@@ -1,7 +1,10 @@
 import React from 'react';
-import { Movie } from "@/types/movie";
-import Image from "next/image";
-import styles from "./components.module.css";
+
+import Image from 'next/image';
+
+import { Movie } from '@/types/movie';
+
+import styles from './components.module.css';
 
 interface CastAndCrewProps {
   movie: Movie;
@@ -34,7 +37,7 @@ const CastAndCrew: React.FC<CastAndCrewProps> = ({ movie }) => {
                         className={styles.castImg}
                       />
                     ) : (
-                      <div className={styles.castImgPlaceholder}></div>
+                      <div className={styles.castImgPlaceholder} />
                     )}
                   </td>
                   <td className={styles.castNameCell}>
@@ -58,10 +61,10 @@ const CastAndCrew: React.FC<CastAndCrewProps> = ({ movie }) => {
           </div>
           <table className={styles.crewTable}>
             <tbody>
-              {["Director", "Writer", "Producer", "Photography", "Musician"].map(
+              {['Director', 'Writer', 'Producer', 'Photography', 'Musician'].map(
                 (job) => {
                   const crewMembers = movie?.credits?.crew?.filter(
-                    (c) => c.job === job
+                    (c) => c.job === job,
                   );
                   if (!crewMembers || crewMembers.length === 0) return null;
                   return (
@@ -73,7 +76,7 @@ const CastAndCrew: React.FC<CastAndCrewProps> = ({ movie }) => {
                         {crewMembers.map((c, i) => (
                           <span key={c.id} className={styles.crewName}>
                             {c.name}
-                            {i < crewMembers.length - 1 ? ", " : ""}
+                            {i < crewMembers.length - 1 ? ', ' : ''}
                           </span>
                         ))}
                       </td>
@@ -87,12 +90,12 @@ const CastAndCrew: React.FC<CastAndCrewProps> = ({ movie }) => {
                             className={styles.crewImg}
                           />
                         ) : (
-                          <div className={styles.crewImgPlaceholder}></div>
+                          <div className={styles.crewImgPlaceholder} />
                         )}
                       </td>
                     </tr>
                   );
-                }
+                },
               )}
             </tbody>
           </table>

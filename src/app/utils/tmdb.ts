@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/';
 type PosterSize = 'w92'|'w154'|'w185'|'w342'|'w500'|'w780'|'original';
@@ -36,10 +36,10 @@ export interface Genre {
  * @throws If the request fails or the response is not 200.
  */
 export async function fetchGenres(apiKey: string): Promise<Genre[]> {
-  const res = await axios(`https://api.themoviedb.org/3/genre/movie/list?`,  {
+  const res = await axios('https://api.themoviedb.org/3/genre/movie/list?',  {
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      accept: "application/json",
+      accept: 'application/json',
     },
   });
   if (res.status !== 200) throw new Error('Failed to load genres');

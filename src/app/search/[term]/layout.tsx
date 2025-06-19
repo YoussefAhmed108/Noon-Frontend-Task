@@ -1,12 +1,13 @@
-import React from 'react' 
-import Search from './page'
+import React from 'react';
+ 
+import Search from './page';
 
 const layout = () => {
   return (
     <div>
-        <Search/>
+      <Search/>
     </div>
-  )
-}
+  );
+};
 
-export default layout
+export default layout;

@@ -1,23 +1,26 @@
-"use client";
-import { getBackdropUrl } from "@/app/utils/tmdb";
-import { Movie } from "@/types/movie";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import Spinner from "@/components/Spinner";
-import styles from "./page.module.css";
-import MovieBanner from "./components/MovieBanner";
-import MovieDetails from "./components/MovieDetails";
-import MovieTrailer from "./components/MovieTrailer";
-import CastAndCrew from "./components/CastAndCrew";
+'use client';
+import React, { useEffect, useState } from 'react';
+
+import { useParams } from 'next/navigation';
+
+import { getBackdropUrl } from '@/app/utils/tmdb';
+import Spinner from '@/components/Spinner';
+import { Movie } from '@/types/movie';
+
+import CastAndCrew from './components/CastAndCrew';
+import MovieBanner from './components/MovieBanner';
+import MovieDetails from './components/MovieDetails';
+import MovieTrailer from './components/MovieTrailer';
+import styles from './page.module.css';
 
 const MoviePage = () => {
   const { id } = useParams();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
   const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=credits,videos`;
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      accept: "application/json",
+      accept: 'application/json',
       Authorization: `Bearer ${API_KEY}`,
     },
   };
@@ -56,10 +59,10 @@ const MoviePage = () => {
 
   const trailer = movie?.videos?.results?.find(
     (video) =>
-      video.site === "YouTube" &&
-      video.type === "Trailer" &&
+      video.site === 'YouTube' &&
+      video.type === 'Trailer' &&
       video.official &&
-      video.name.includes("Official Trailer")
+      video.name.includes('Official Trailer'),
   );
 
   if (isLoading) return <Spinner />;
@@ -70,20 +73,20 @@ const MoviePage = () => {
       style={{
         backgroundImage: movie?.backdrop_path
           ? `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url(${getBackdropUrl(
-              movie.backdrop_path
-            )})`
+            movie.backdrop_path,
+          )})`
           : undefined,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        minHeight: "100vh",
-        color: "#fff",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        minHeight: '100vh',
+        color: '#fff',
       }}
     >
       <div className={styles.centerCard}>
         <div className={styles.movieInfo}>
-          <MovieBanner movie={movie!} />
-          <MovieDetails movie={movie!} isMobile={isMobile} />
+          {movie && (<MovieBanner movie={movie}/>)}
+          {movie && <MovieDetails movie={movie!} isMobile={isMobile} />}
         </div>
         
         <MovieTrailer trailer={trailer} />

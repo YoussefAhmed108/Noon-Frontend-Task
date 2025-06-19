@@ -1,12 +1,13 @@
-import React from 'react'
-import FavouritesPage from './page'
+import React from 'react';
+
+import FavouritesPage from './page';
 
 const layout = () => {
   return (
     <div>
-        <FavouritesPage/>
+      <FavouritesPage/>
     </div>
-  )
-}
+  );
+};
 
-export default layout
+export default layout;

@@ -4,9 +4,10 @@
  * Zustand store for managing a list of favorite movies with persistence in localStorage.
  * @module useFavMovieStore
  */
-import { Movie } from '@/types/movie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
+import { Movie } from '@/types/movie';
 
 /**
  * State and actions related to favorite movies.
@@ -72,6 +73,6 @@ export const useFavMovieStore = create<FavMoviesState>()(
        */
       name: 'fav-movies',
       // getStorage: () => localStorage // defaults to localStorage
-    }
-  )
+    },
+  ),
 );

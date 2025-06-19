@@ -1,8 +1,10 @@
 import React from 'react';
-import { Movie } from "@/types/movie";
-import { formatRuntime } from "@/app/utils/tmdb";
-import styles from "./components.module.css";
+
+import { formatRuntime } from '@/app/utils/tmdb';
+import { Movie } from '@/types/movie';
+
 import MovieHeader from './MovieHeader';
+import styles from './components.module.css';
 
 interface MovieDetailsProps {
   movie: Movie;
@@ -11,28 +13,28 @@ interface MovieDetailsProps {
 
 const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, isMobile }) => {
   // Helper for genres
-  const genreNames = movie?.genres?.map((g) => g.name).join(", ");
+  const genreNames = movie?.genres?.map((g) => g.name).join(', ');
   
   // Helper for cast
   const castNames = movie?.credits?.cast
     ?.map((c) => c.name)
     .slice(0, 6)
-    .join(", ");
+    .join(', ');
     
   // Helper for production
   const production = movie?.production_companies?.[0]?.name;
   
   // Helper for country
-  const country = movie?.production_countries?.map((c) => c.name).join(", ");
+  const country = movie?.production_countries?.map((c) => c.name).join(', ');
   
   // Helper for release date
   const releaseDate = movie?.release_date
-    ? new Date(movie.release_date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      })
-    : "";
+    ? new Date(movie.release_date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
+    })
+    : '';
 
   return (
     <div className={styles.infoCol}>
@@ -45,10 +47,10 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, isMobile }) => {
           </span>
         ))}
         <span className={styles.metaItem}>
-          &#x1F4C5; {movie?.release_date?.split("-")[0]}
+          &#x1F4C5; {movie?.release_date?.split('-')[0]}
         </span>
         <span className={styles.metaItem}>
-          &#x23F1; {movie?.runtime ? formatRuntime(movie.runtime) : ""}
+          &#x23F1; {movie?.runtime ? formatRuntime(movie.runtime) : ''}
         </span>
         <span className={styles.metaItem}>★ {movie?.vote_average.toPrecision(2)}</span>
       </div>

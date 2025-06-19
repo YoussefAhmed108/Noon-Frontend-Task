@@ -1,9 +1,12 @@
-"use client";
-import MovieCard from "@/components/MovieCard";
-import { useFavMovieStore } from "@/stores/useMovieStore";
-import React, { useEffect, useState } from "react";
-import styles from "./page.module.css";
-import Link from "next/link";
+'use client';
+import React, { useEffect, useState } from 'react';
+
+import Link from 'next/link';
+
+import MovieCard from '@/components/MovieCard';
+import { useFavMovieStore } from '@/stores/useMovieStore';
+
+import styles from './page.module.css';
 
 const FavouritesPage = () => {
   const { movies } = useFavMovieStore();
@@ -30,10 +33,10 @@ const FavouritesPage = () => {
             <div className={styles.emptyStateText}>
               {mounted
                 ? "You haven't added any favorite movies yet. Browse movies to find your favorites!"
-                : "Loading your favorite movies..."}
+                : 'Loading your favorite movies...'}
             </div>
             {mounted && (
-              <Link href="/">
+              <Link href='/'>
                 <button className={styles.browseButton}>Browse Movies</button>
               </Link>
             )}
