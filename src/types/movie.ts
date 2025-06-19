@@ -37,6 +37,8 @@ export interface Movie {
       id: number;
       known_for_department: string;
       name: string;
+      profile_path?: string;
+      character: string;
     }>;
     crew: Array<{
       adult: boolean;
@@ -44,6 +46,8 @@ export interface Movie {
       id: number;
       known_for_department: string;
       name: string;
+      profile_path?: string;
+      job: string;
     }>;
     
   };
